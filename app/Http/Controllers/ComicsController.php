@@ -14,7 +14,9 @@ class ComicsController extends Controller
      */
     public function index()
     {
-        //
+        $records = ComicsModel::all(); // Otteniamo tutti i record dal modello
+
+        return view('nome_vista.index', ['records' => $records]);
     }
 
     /**
@@ -24,7 +26,7 @@ class ComicsController extends Controller
      */
     public function create()
     {
-        //
+        return view('nome_vista.create');
     }
 
     /**
@@ -35,7 +37,19 @@ class ComicsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validazione dei dati inviati dal form
+        $validatedData = $request->validate([]);
+
+        // Creazione di un nuovo record nel database
+        $record = ComicsModel::create($validatedData);
+
+        // Reindirizzamento alla pagina di visualizzazione del nuovo record
+        return redirect()->route('nome_modello.show', ['id' => $record->id]);
+
+        $validatedData = $request->validate([
+            //
+
+        ]);
     }
 
     /**
@@ -46,7 +60,9 @@ class ComicsController extends Controller
      */
     public function show(ComicsModel $comicsModel)
     {
-        //
+        $record = ComicsModel::find($id);
+
+        return view('nome_vista.show', ['record' => $record]);
     }
 
     /**
