@@ -14,9 +14,9 @@ class ComicsController extends Controller
      */
     public function index()
     {
-        $records = ComicsModel::all(); // Otteniamo tutti i record dal modello
+        $records = ComicsModel::all();
 
-        return view('nome_vista.index', ['records' => $records]);
+        return view('ComicsModel.index', compact('comics'));
     }
 
     /**
@@ -26,8 +26,9 @@ class ComicsController extends Controller
      */
     public function create()
     {
-        return view('nome_vista.create');
+        return view('ComicsModel.create');
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -37,19 +38,17 @@ class ComicsController extends Controller
      */
     public function store(Request $request)
     {
-        // Validazione dei dati inviati dal form
-        $validatedData = $request->validate([]);
+        //salvo dati in arrivo dal form
+        $data = $request->all();
+        //creo un modello Pasta
+        $newComicsModel = new ComicsModel();
 
-        // Creazione di un nuovo record nel database
-        $record = ComicsModel::create($validatedData);
+        //salvataggio in tabella
+        $newComicsModel->fill($data);
+        $newComicsModel->save();
 
-        // Reindirizzamento alla pagina di visualizzazione del nuovo record
-        return redirect()->route('nome_modello.show', ['id' => $record->id]);
-
-        $validatedData = $request->validate([
-            //
-
-        ]);
+        // return redirect()->route('pastas.show', $newPasta->id);
+        return to_route('ComicsModel.show', $newComicsModel->id);;
     }
 
     /**
@@ -58,11 +57,9 @@ class ComicsController extends Controller
      * @param  \App\Models\ComicsModel  $comicsModel
      * @return \Illuminate\Http\Response
      */
-    public function show(ComicsModel $comicsModel)
+    public function show(ComicsModel $ComicsModel)
     {
-        $record = ComicsModel::find($id);
-
-        return view('nome_vista.show', ['record' => $record]);
+        return view('pasta.show', compact('pasta'));
     }
 
     /**
@@ -71,9 +68,9 @@ class ComicsController extends Controller
      * @param  \App\Models\ComicsModel  $comicsModel
      * @return \Illuminate\Http\Response
      */
-    public function edit(ComicsModel $comicsModel)
+    public function edit(ComicsModel $ComicsModel)
     {
-        //
+        return view('ComicsModel.edit', compact('comics'));
     }
 
     /**
@@ -83,9 +80,14 @@ class ComicsController extends Controller
      * @param  \App\Models\ComicsModel  $comicsModel
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ComicsModel $comicsModel)
+    public function update(Request $request, ComicsModel $ComicsModel)
     {
-        //
+        $data = $request->all();
+
+        $ComicsModel->update($data);
+
+        //return redirect()->route('pastas.show', $pasta->id);
+        return to_route('comics.index');
     }
 
     /**
@@ -94,8 +96,9 @@ class ComicsController extends Controller
      * @param  \App\Models\ComicsModel  $comicsModel
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ComicsModel $comicsModel)
+    public function destroy(ComicsModel $ComicsModel)
     {
-        //
+        $ComicsModel->delete();
+        return to_route('comics.index');
     }
 }
