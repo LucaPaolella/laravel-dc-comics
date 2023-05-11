@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\ComicsModel;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ComicsController extends Controller
 {
@@ -16,7 +17,7 @@ class ComicsController extends Controller
     {
         $comics = ComicsModel::all();
 
-        return view('ComicsModel.index', compact('comics'));
+        return view('comics.index', compact('comics'));
     }
 
     /**
