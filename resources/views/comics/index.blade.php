@@ -25,6 +25,20 @@
 
         </tbody>
     </table>
+
+    <button onclick="confermaCancellazione()">Delete</button>
+
+
+    <button id="deleteButton">Delete</button>
+    <script>
+        const deleteButton = document.getElementById('deleteButton');
+        deleteButton.addEventListener('click', confermaCancellazione);
+    </script>
+
+
+
 </div>
+
+<script src="main.js"></script>
 
 @endsection
