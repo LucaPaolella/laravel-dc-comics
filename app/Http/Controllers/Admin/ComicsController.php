@@ -47,8 +47,8 @@ class ComicsController extends Controller
         $newComicsModel->fill($data);
         $newComicsModel->save();
 
-        // return redirect()->route('pastas.show', $newPasta->id);
-        return to_route('ComicsModel.show', $newComicsModel->id);;
+        //return to_route('ComicsModel.show', $newComicsModel->id);;
+        return redirect()->route('comics.show', $newComicsModel->id);
     }
 
     /**
@@ -59,7 +59,7 @@ class ComicsController extends Controller
      */
     public function show(ComicsModel $ComicsModel)
     {
-        return view('pasta.show', compact('pasta'));
+        return view('ComicsModel.show', compact('ComicsModel'));
     }
 
     /**
@@ -70,7 +70,7 @@ class ComicsController extends Controller
      */
     public function edit(ComicsModel $ComicsModel)
     {
-        return view('ComicsModel.edit', compact('comics'));
+        return view('ComicsModel.edit', compact('ComicsModel'));
     }
 
     /**
@@ -87,7 +87,7 @@ class ComicsController extends Controller
         $ComicsModel->update($data);
 
         //return redirect()->route('pastas.show', $pasta->id);
-        return to_route('comics.index');
+        return redirect()->route('comics.index', $ComicsModel->id);
     }
 
     /**
@@ -99,6 +99,6 @@ class ComicsController extends Controller
     public function destroy(ComicsModel $ComicsModel)
     {
         $ComicsModel->delete();
-        return to_route('comics.index');
+        return redirect()->route('comics.index');
     }
 }
