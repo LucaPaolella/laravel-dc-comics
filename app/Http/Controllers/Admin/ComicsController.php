@@ -41,7 +41,6 @@ class ComicsController extends Controller
     {
         //salvo dati in arrivo dal form
         $data = $request->all();
-        //creo un modello Pasta
         $newComicsModel = new ComicsModel();
 
         //salvataggio in tabella
@@ -50,6 +49,10 @@ class ComicsController extends Controller
 
         //return to_route('ComicsModel.show', $newComicsModel->id);;
         return redirect()->route('comics.show', $newComicsModel->id);
+
+        $validatedData = $request->validate([
+            'ComicsName' => 'required|max:50',
+        ]);
     }
 
     /**
@@ -87,7 +90,6 @@ class ComicsController extends Controller
 
         $ComicsModel->update($data);
 
-        //return redirect()->route('pastas.show', $pasta->id);
         return redirect()->route('comics.index', $ComicsModel->id);
     }
 
@@ -101,5 +103,12 @@ class ComicsController extends Controller
     {
         $ComicsModel->delete();
         return redirect()->route('comics.index');
+    }
+
+    public function rules()
+    {
+        return [
+            'ComicsName' => 'required|max:50',
+        ];
     }
 }
